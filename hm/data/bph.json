@@ -1,0 +1,6 @@
+[
+  {"name": "Alya Putri", "position": "Ketua Umum", "photo": "https://i.pravatar.cc/300?img=1", "contact": "mailto:alya@example.com"},
+  {"name": "Rizky Maulana", "position": "Wakil Ketua", "photo": "https://i.pravatar.cc/300?img=2", "contact": "mailto:rizky@example.com"},
+  {"name": "Nadia Safira", "position": "Sekretaris", "photo": "https://i.pravatar.cc/300?img=3", "contact": "mailto:nadia@example.com"},
+  {"name": "Fajar Nugraha", "position": "Bendahara", "photo": "https://i.pravatar.cc/300?img=4", "contact": "mailto:fajar@example.com"}
+]

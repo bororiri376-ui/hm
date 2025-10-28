@@ -1,0 +1,237 @@
+body { background-color: #f8fafc; }
+.navbar-brand { letter-spacing: 0.5px; }
+.card-img-top { object-fit: cover; height: 180px; }
+.gallery-img { object-fit: cover; height: 220px; }
+footer { position: relative; }
+
+/* iOS liquid glass theme */
+:root {
+  --glass-bg: rgba(255, 255, 255, 0.18);
+  --glass-border: rgba(255, 255, 255, 0.35);
+  --glass-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  --radius-xl: 18px;
+  --radius-lg: 14px;
+}
+
+/* Soft gradient background with subtle blobs */
+body {
+  min-height: 100vh;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  /* Soft gray airy gradients */
+  background: radial-gradient(1200px 600px at 8% -10%, rgba(209, 213, 219, .38), transparent 60%),
+              radial-gradient(900px 500px at 105% 8%, rgba(156, 163, 175, .24), transparent 55%),
+              radial-gradient(700px 420px at 50% 110%, rgba(229, 231, 235, .45), transparent 60%),
+              linear-gradient(135deg, #f3f4f6 0%, #f5f6f8 40%, #fafafa 100%);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Translucent, blurred navbar */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1030;
+  background: var(--glass-bg) !important;
+  -webkit-backdrop-filter: saturate(160%) blur(14px);
+  backdrop-filter: saturate(160%) blur(14px);
+  border-bottom: 1px solid var(--glass-border);
+  overflow: hidden; /* allow bubble */
+  isolation: isolate; /* keep pseudo-element behind content */
+}
+.navbar .navbar-brand { letter-spacing: .6px; color: #0f172a !important; }
+.navbar .nav-link { color: #0f172a !important; opacity: .8; }
+.navbar .nav-link:hover, .navbar .nav-link:focus { opacity: 1; }
+
+/* Bubble hover effect for navbar */
+.navbar::before {
+  content: "";
+  position: absolute;
+  top: var(--y, 50%);
+  left: var(--x, 50%);
+  width: 700px;
+  height: 700px;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle at center,
+              rgba(255,255,255,0.45),
+              rgba(209, 213, 219, 0.25) 35%,
+              rgba(255,255,255,0) 65%);
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity .25s ease;
+  pointer-events: none;
+  mix-blend-mode: soft-light;
+  z-index: 0;
+}
+.navbar:hover::before { opacity: .9; }
+.navbar > * { position: relative; z-index: 1; }
+
+/* Glass cards */
+.card {
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: saturate(180%) blur(16px);
+  backdrop-filter: saturate(180%) blur(16px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--glass-shadow);
+  overflow: hidden;
+}
+.card .card-body {
+  color: #0f172a;
+}
+.card .card-footer {
+  background: transparent;
+  border-top: 1px solid rgba(255,255,255,0.25);
+}
+.card-img-top {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+/* List group items as glass */
+.list-group-item {
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: saturate(160%) blur(14px);
+  backdrop-filter: saturate(160%) blur(14px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg) !important;
+  margin-bottom: .5rem;
+}
+.list-group-item-action:hover,
+.list-group-item-action:focus {
+  transform: translateY(-1px);
+  transition: transform .2s ease, box-shadow .2s ease;
+  box-shadow: 0 8px 24px rgba(107, 114, 128, .18);
+}
+
+/* Breadcrumbs and subtle UI */
+.breadcrumb {
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: saturate(160%) blur(12px);
+  backdrop-filter: saturate(160%) blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: .5rem .75rem;
+}
+
+/* Buttons tuned for glass look */
+.btn-primary,
+.btn-outline-primary {
+  border-radius: 10px; /* square but not too sharp */
+  border-width: 1px;
+  box-shadow: 0 6px 14px rgba(107,114,128,0.25);
+}
+.btn-primary {
+  background: linear-gradient(135deg, rgba(156, 163, 175, .96), rgba(209, 213, 219, .96)); /* gray-400 to gray-300 */
+  border-color: rgba(209, 213, 219, .9);
+}
+.btn-primary:hover { filter: brightness(1.05); }
+.btn-outline-primary {
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: saturate(160%) blur(10px);
+  backdrop-filter: saturate(160%) blur(10px);
+  border-color: var(--glass-border);
+}
+
+/* Bubble hover effect */
+.btn {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate; /* ensure pseudo-element stacking is contained */
+}
+.btn::before {
+  content: "";
+  position: absolute;
+  top: var(--y, 50%);
+  left: var(--x, 50%);
+  width: 220px;
+  height: 220px;
+  transform: translate(-50%, -50%);
+  background: radial-gradient( circle at center, rgba(255,255,255,0.55), rgba(255,255,255,0.0) 60% );
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity .25s ease;
+  pointer-events: none;
+  mix-blend-mode: soft-light;
+}
+.btn:hover::before,
+.btn:focus-visible::before,
+.btn.bubble-active::before {
+  opacity: .9;
+}
+.btn:active {
+  transform: translateY(1px);
+}
+
+/* Convert generic primary backgrounds (panels/hero) into glass panes */
+.bg-primary:not(.btn) {
+  background: var(--glass-bg) !important;
+  color: #0f172a !important;
+  -webkit-backdrop-filter: saturate(180%) blur(16px);
+  backdrop-filter: saturate(180%) blur(16px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--glass-shadow);
+}
+
+/* Headings and spacing */
+h1, h2, h3, .h1, .h2, .h3 { letter-spacing: .2px; }
+main { padding-top: 1.25rem; }
+main .container { padding-left: .25rem; padding-right: .25rem; }
+
+/* Gallery images keep the glass card look */
+.gallery-img { object-fit: cover; height: 220px; }
+
+/* Hero banner responsive heights */
+.hero-bg {
+  min-height: 360px; /* bigger visual on mobile */
+}
+@media (min-width: 576px) {
+  .hero-bg { min-height: 300px; }
+}
+@media (min-width: 992px) {
+  .hero-bg { min-height: 340px; }
+}
+
+/* Compact stats cards */
+.stat-card { min-height: 104px; }
+.stat-card .card-body { padding: 10px 12px; }
+.stat-title { font-size: .78rem; color: #6b7280; letter-spacing: .2px; }
+.stat-num { font-weight: 800; font-size: 1.4rem; line-height: 1.05; color: #111827; }
+.stat-badge { font-size: .68rem; padding: .3rem .45rem; }
+
+/* Horizontal scroll row for small screens */
+.stats-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: .25rem;
+}
+.stat-col { flex: 0 0 auto; width: 72%; max-width: 300px; }
+.stat-col + .stat-col { margin-left: .5rem; }
+.stats-scroll { scroll-snap-type: x proximity; }
+.stat-col { scroll-snap-align: start; }
+.stats-scroll::-webkit-scrollbar { height: 6px; }
+.stats-scroll::-webkit-scrollbar-thumb { background: rgba(0,0,0,.15); border-radius: 3px; }
+
+/* Icon style inside stat cards */
+.stat-icon {
+  font-size: 1.2rem;
+  line-height: 1;
+  margin-right: .5rem;
+}
+
+@media (min-width: 576px) {
+  .stat-col { width: 46%; max-width: 320px; }
+}
+@media (min-width: 768px) {
+  .stats-scroll { overflow: visible; }
+  .stat-col { width: auto; margin-left: 0; }
+}
+
+/* Reduce transparency for accessibility if user prefers */
+@media (prefers-reduced-transparency: reduce) {
+  .navbar, .card, .list-group-item, .breadcrumb, .btn-outline-primary {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    background: rgba(255,255,255,0.9);
+  }
+}

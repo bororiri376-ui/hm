@@ -1,0 +1,7 @@
+[
+  { "nim": "admin", "name": "Admin HIMASI", "password": "admin123", "role": "admin" },
+  { "nim": "ketua", "name": "Ketua Terpilih", "password": "ketua123", "role": "ketua" },
+  { "nim": "2201001", "name": "Mahasiswa 1", "password": "student123", "role": "student" },
+  { "nim": "2201002", "name": "Mahasiswa 2", "password": "student123", "role": "student" },
+  { "nim": "2201003", "name": "Mahasiswa 3", "password": "student123", "role": "student" }
+]

@@ -1,0 +1,47 @@
+[
+    {
+        "id": 1,
+        "title": "Pelantikan Pengurus HIMAS",
+        "date": "2025-01-15",
+        "author": "Humas HIMASI",
+        "excerpt": "Pengurus baru HIMASI periode 2025 resmi dilantik.",
+        "content": "Pengurus HIMASI periode 2025 telah resmi dilantik pada acara yang digelar di aula kampus. Acara dihadiri oleh dosen, alumni, dan mahasiswa.",
+        "image": "https://images.unsplash.com/photo-1515187029135-18ee286d815b?q=80&w=1600&auto=format&fit=crop"
+    },
+    {
+        "id": 2,
+        "title": "Seminar Data Analytics",
+        "date": "2025-03-10",
+        "author": "Divisi Akademik",
+        "excerpt": "HIMASI menyelenggarakan seminar mengenai Data Analytics dan peluang kariernya.",
+        "content": "Seminar menghadirkan pembicara dari industri untuk membahas penerapan data analytics dalam bisnis modern.",
+        "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1600&auto=format&fit=crop"
+    },
+    {
+        "id": 3,
+        "title": "Workshop UI/UX Design",
+        "date": "2025-04-22",
+        "author": "Divisi Riset",
+        "excerpt": "Pengenalan prinsip dasar UI/UX untuk aplikasi web dan mobile.",
+        "content": "Peserta mempelajari dasar desain antarmuka dan pengalaman pengguna melalui studi kasus dan praktik langsung.",
+        "image": "https://images.unsplash.com/photo-1529336953121-ad5a98c5f7f9?q=80&w=1600&auto=format&fit=crop"
+    },
+    {
+        "id": 4,
+        "title": "hamdan",
+        "date": "2004-08-25",
+        "author": "admin",
+        "excerpt": "sjcnjasncjansjcn",
+        "content": "cm ca ckakckmacka",
+        "image": "https://www.google.com/imgres?q=gambar%20garuda&imgurl=https%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fcommons%2Fthumb%2F9%2F90%2FNational_emblem_of_Indonesia_Garuda_Pancasila.svg%2F953px-National_emblem_of_Indonesia_Garuda_Pancasila.svg.png&imgrefurl=https%3A%2F%2Fid.wikipedia.org%2Fwiki%2FBerkas%3ANational_emblem_of_Indonesia_Garuda_Pancasila.svg&docid=YdFJaJEQhIQ8LM&tbnid=5epo7evSwiml_M&vet=12ahUKEwiGkayFisaQAxXp1jgGHZEOFIoQM3oECB4QAA..i&w=953&h=1025&hcb=2&ved=2ahUKEwiGkayFisaQAxXp1jgGHZEOFIoQM3oECB4QAA"
+    },
+    {
+        "id": 5,
+        "title": "adam dak pernah mandi",
+        "date": "2004-08-25",
+        "author": "admin",
+        "excerpt": "uawsdabduaibf",
+        "content": "anjancjanvjinjivnewij",
+        "image": "/hm/assets/uploads/img_20251028_095254_29eac6.jpg"
+    }
+]

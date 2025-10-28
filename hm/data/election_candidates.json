@@ -1,0 +1,70 @@
+{
+    "ketua": [
+        {
+            "id": 1,
+            "name": "Calon Ketua A",
+            "nim": "2202001",
+            "photo": "https://i.pravatar.cc/300?img=11"
+        },
+        {
+            "id": 2,
+            "name": "Calon Ketua B",
+            "nim": "2202002",
+            "photo": "https://i.pravatar.cc/300?img=12"
+        },
+        {
+            "id": 3,
+            "name": "kidil",
+            "nim": "15167165",
+            "photo": "/hm/assets/uploads/img_20251028_100437_876df1.jpg"
+        },
+        {
+            "id": 4,
+            "name": "pajar",
+            "nim": "79865765",
+            "photo": "/hm/assets/uploads/img_20251028_100515_54d8a4.jpg"
+        }
+    ],
+    "wakil": [
+        {
+            "id": 1,
+            "name": "Calon Wakil A",
+            "nim": "2203001",
+            "photo": "https://i.pravatar.cc/300?img=13"
+        },
+        {
+            "id": 2,
+            "name": "Calon Wakil B",
+            "nim": "2203002",
+            "photo": "https://i.pravatar.cc/300?img=14"
+        },
+        {
+            "id": 3,
+            "name": "hamdan",
+            "nim": "168716871",
+            "photo": "/hm/assets/uploads/img_20251028_100437_449f2b.jpg"
+        },
+        {
+            "id": 4,
+            "name": "adam",
+            "nim": "6789768",
+            "photo": "/hm/assets/uploads/img_20251028_100515_c1c6b1.jpg"
+        }
+    ],
+    "pairs": [
+        {
+            "id": 1,
+            "ketua_id": 3,
+            "wakil_id": 3,
+            "ketua_name": "kidil",
+            "wakil_name": "hamdan"
+        },
+        {
+            "id": 2,
+            "ketua_id": 4,
+            "wakil_id": 4,
+            "ketua_name": "pajar",
+            "wakil_name": "adam"
+        }
+    ]
+}
