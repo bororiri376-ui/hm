@@ -1,45 +1,43 @@
 <?php
   $pageTitle = 'Beranda';
   require __DIR__ . '/includes/header.php';
+  require_once __DIR__ . '/includes/db.php';
 
-  function read_json($path) {
-    $json = @file_get_contents($path);
-    if ($json === false) return [];
-    $data = json_decode($json, true);
-    return is_array($data) ? $data : [];
-  }
+  // Stats from SQL
+  $totalMahasiswa = (int)db()->query("SELECT COUNT(*) AS c FROM users WHERE role='student'")->fetch()['c'];
+  $totalAktif = $totalMahasiswa; // placeholder; adjust if ada field status aktif
+  $totalBph = (int)db()->query("SELECT COUNT(*) AS c FROM bph")->fetch()['c'];
 
-  $berita = read_json(__DIR__ . '/data/berita.json');
-  $pengumuman = read_json(__DIR__ . '/data/pengumuman.json');
-  $users = read_json(__DIR__ . '/data/users.json');
-  $bph = read_json(__DIR__ . '/data/bph.json');
-  $galeri = read_json(__DIR__ . '/data/galeri.json');
-  $heroImg = '';
-  if (is_array($galeri) && count($galeri) > 0 && !empty($galeri[0]['image'])) {
-    $heroImg = $galeri[0]['image'];
-  }
-  $totalMahasiswa = 0;
-  if (is_array($users)) {
-    foreach ($users as $u) { if (($u['role'] ?? '') === 'student') { $totalMahasiswa++; } }
-  }
-  $totalAktif = $totalMahasiswa; // asumsi seluruh mahasiswa aktif; bisa diganti jika ada field status
-  $totalBph = is_array($bph) ? count($bph) : 0;
+  // Hero image from latest galeri
+  $rowHero = db()->query("SELECT image FROM galeri ORDER BY id DESC LIMIT 1")->fetch();
+  $heroImg = $rowHero['image'] ?? '';
+
+  // Latest items
+  $berita = db()->query("SELECT id, title, author, excerpt, image, DATE_FORMAT(date,'%Y-%m-%d') AS date FROM berita ORDER BY date DESC, id DESC LIMIT 3")->fetchAll();
+  $pengumuman = db()->query("SELECT id, title, excerpt, DATE_FORMAT(date,'%Y-%m-%d') AS date FROM pengumuman ORDER BY date DESC, id DESC LIMIT 3")->fetchAll();
+
+  // Ketua & Wakil HIMASI (current)
+  $stmtKW = db()->query("SELECT name, position, photo, contact FROM bph WHERE position IN ('Ketua','Wakil') ORDER BY FIELD(position,'Ketua','Wakil'), name ASC");
+  $ketuaWakil = $stmtKW ? $stmtKW->fetchAll() : [];
 ?>
 
 <section class="mb-4">
   <div class="position-relative rounded-3 overflow-hidden border">
     <div class="w-100 hero-bg" style="background: <?= $heroImg ? 'url(' . htmlspecialchars($heroImg) . ') center/cover no-repeat' : 'linear-gradient(135deg,#9ca3af,#d1d5db)' ?>;"></div>
-    <div class="position-absolute top-0 start-0 w-100 h-100" style="background: rgba(0,0,0,.35);"></div>
+    <div class="position-absolute top-0 start-0 w-100 h-100" style="background: linear-gradient(to bottom, rgba(0,0,0,.35), rgba(0,0,0,.45));"></div>
     <div class="position-absolute top-50 start-50 translate-middle w-100 px-4 px-md-5 text-white">
-      <h1 class="h3 mb-1">Selamat Datang di HIMASI</h1>
-      <div class="text-white-50">Himpunan Mahasiswa Sistem Informasi</div>
+      <h1 class="display-4 fw-bold mb-2 hero-title">Selamat Datang di HIMASI</h1>
+      <div class="lead text-white-75 mb-0 hero-subtitle">Himpunan Mahasiswa Sistem Informasi</div>
     </div>
   </div>
+  
 </section>
 
+ 
+
 <section class="mb-4">
-  <div class="row g-2 g-md-3">
-    <div class="col-4 col-md-4">
+  <div class="row g-2 g-sm-3 g-md-3">
+    <div class="col-12 col-sm-6 col-md-4">
       <div class="card stat-card h-100">
         <div class="card-body d-flex align-items-center justify-content-between">
           <div>
@@ -50,7 +48,7 @@
         </div>
       </div>
     </div>
-    <div class="col-4 col-md-4">
+    <div class="col-12 col-sm-6 col-md-4">
       <div class="card stat-card h-100">
         <div class="card-body d-flex align-items-center justify-content-between">
           <div>
@@ -61,7 +59,7 @@
         </div>
       </div>
     </div>
-    <div class="col-4 col-md-4">
+    <div class="col-12 col-sm-6 col-md-4">
       <div class="card stat-card h-100">
         <div class="card-body d-flex align-items-center justify-content-between">
           <div>
@@ -77,7 +75,7 @@
 
 <section class="mb-5">
   <div class="d-flex justify-content-between align-items-center mb-3">
-    <h2 class="h4 mb-0">Tujuan HIMASI</h2>
+    <h2 class="h4 mb-0 section-title">Tujuan HIMASI</h2>
   </div>
   <div class="row g-3">
     <div class="col-md-4">
@@ -109,7 +107,7 @@
 
 <section class="mb-5">
   <div class="d-flex justify-content-between align-items-center mb-3">
-    <h2 class="h4 mb-0">Berita Terbaru</h2>
+    <h2 class="h4 mb-0 section-title">Berita Terbaru</h2>
     <a class="btn btn-sm btn-outline-primary" href="/hm/berita.php">Lihat semua</a>
   </div>
   <div class="row g-3">
@@ -133,7 +131,7 @@
 
 <section class="mb-4">
   <div class="d-flex justify-content-between align-items-center mb-3">
-    <h2 class="h4 mb-0">Pengumuman</h2>
+    <h2 class="h4 mb-0 section-title">Pengumuman</h2>
     <a class="btn btn-sm btn-outline-primary" href="/hm/pengumuman.php">Lihat semua</a>
   </div>
   <div class="list-group">
@@ -148,5 +146,32 @@
     <?php endforeach; ?>
   </div>
 </section>
+
+<?php if (!empty($ketuaWakil)): ?>
+<section class="mb-4">
+  <div class="d-flex justify-content-between align-items-center mb-2">
+    <h2 class="h4 mb-0 section-title">Ketua & Wakil HIMASI</h2>
+    <a class="btn btn-sm btn-outline-primary" href="/hm/bph.php">Lihat BPH</a>
+  </div>
+  <div class="row g-3 mb-2">
+    <?php foreach ($ketuaWakil as $m): ?>
+      <div class="col-12 col-md-6">
+        <div class="card h-100 text-center">
+          <img src="<?= htmlspecialchars($m['photo']) ?>" class="card-img-top" alt="" style="width:220px!important; height:220px!important; object-fit:cover; display:block; margin:16px auto 0; border-radius:50%; box-shadow:0 10px 24px rgba(0,0,0,.15);">
+          <div class="card-body">
+            <div class="fw-semibold" style="font-size:1.05rem;"><?= htmlspecialchars($m['name']) ?></div>
+            <div class="small text-muted" style="margin-top:4px;"><?= htmlspecialchars($m['position']) ?></div>
+          </div>
+          <?php if (!empty($m['contact'])): ?>
+          <div class="card-footer bg-white">
+            <a class="btn btn-sm btn-outline-primary" href="<?= htmlspecialchars($m['contact']) ?>">Kontak</a>
+          </div>
+          <?php endif; ?>
+        </div>
+      </div>
+    <?php endforeach; ?>
+  </div>
+</section>
+<?php endif; ?>
 
 <?php require __DIR__ . '/includes/footer.php'; ?>

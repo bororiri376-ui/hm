@@ -3,6 +3,8 @@ if (session_status() === PHP_SESSION_NONE) {
   session_start();
 }
 
+require_once __DIR__ . '/db.php';
+
 function base_path($path = '') {
   return __DIR__ . '/../' . ltrim($path, '/');
 }
@@ -22,27 +24,34 @@ function write_json_assoc($file, $data) {
 }
 
 function users_all() {
-  return read_json_assoc('users.json', []);
+  return user_db_all();
 }
 
 function users_save($users) {
-  write_json_assoc('users.json', $users);
+  foreach ((array)$users as $u) {
+    $nim = $u['nim'] ?? '';
+    $name = $u['name'] ?? '';
+    $password = $u['password'] ?? '';
+    $role = $u['role'] ?? 'student';
+    if ($nim && $name && $password) {
+      user_db_upsert($nim, $name, $password, $role);
+    }
+  }
 }
 
 function auth_login($nim, $password) {
-  $users = users_all();
-  foreach ($users as $u) {
-    if (isset($u['nim']) && $u['nim'] === $nim) {
-      // Plaintext password check for demo. Replace with password_verify for production.
-      if (isset($u['password']) && $u['password'] === $password) {
-        $_SESSION['user'] = [
-          'nim' => $u['nim'],
-          'name' => $u['name'],
-          'role' => $u['role']
-        ];
-        return true;
-      }
-    }
+  $nim = trim((string)$nim);
+  $password = trim((string)$password);
+  $u = user_db_get($nim);
+  $storedPass = $u && isset($u['password']) ? trim((string)$u['password']) : '';
+  if ($u && $storedPass === $password) {
+    $role = isset($u['role']) ? strtolower($u['role']) : 'student';
+    $_SESSION['user'] = [
+      'nim' => $u['nim'],
+      'name' => $u['name'],
+      'role' => $role
+    ];
+    return true;
   }
   return false;
 }

@@ -2,14 +2,7 @@
   $pageTitle = 'Galeri';
   require __DIR__ . '/includes/header.php';
 
-  function read_json($path) {
-    $json = @file_get_contents($path);
-    if ($json === false) return [];
-    $data = json_decode($json, true);
-    return is_array($data) ? $data : [];
-  }
-
-  $items = read_json(__DIR__ . '/data/galeri.json');
+  $items = galeri_all();
 ?>
 
 <div class="d-flex justify-content-between align-items-center mb-3">

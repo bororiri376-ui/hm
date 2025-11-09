@@ -2,18 +2,14 @@
   $pageTitle = 'Berita';
   require __DIR__ . '/includes/header.php';
 
-  function read_json($path) {
-    $json = @file_get_contents($path);
-    if ($json === false) return [];
-    $data = json_decode($json, true);
-    return is_array($data) ? $data : [];
-  }
-  
-  $berita = read_json(__DIR__ . '/data/berita.json');
   $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 ?>
 
-<?php if ($id): $detail = null; foreach ($berita as $b) { if ((int)$b['id'] === $id) { $detail = $b; break; } } ?>
+<?php if ($id):
+  $stmt = db()->prepare("SELECT id, title, DATE_FORMAT(date, '%Y-%m-%d') AS date, author, excerpt, content, image FROM berita WHERE id=?");
+  $stmt->execute([$id]);
+  $detail = $stmt->fetch();
+?>
   <?php if ($detail): ?>
     <nav aria-label="breadcrumb" class="mb-3">
       <ol class="breadcrumb">
@@ -22,11 +18,19 @@
         <li class="breadcrumb-item active" aria-current="page">Detail</li>
       </ol>
     </nav>
-    <article class="mb-4">
-      <img src="<?= htmlspecialchars($detail['image']) ?>" class="img-fluid rounded mb-3" alt="">
-      <h1 class="h3"><?= htmlspecialchars($detail['title']) ?></h1>
-      <div class="text-muted small mb-3"><?= htmlspecialchars($detail['date']) ?> • <?= htmlspecialchars($detail['author']) ?></div>
-      <p><?= nl2br(htmlspecialchars($detail['content'])) ?></p>
+    <article class="mb-4 berita-detail">
+      <div class="row g-4 align-items-start">
+        <div class="col-md-5 col-lg-4">
+          <img src="<?= htmlspecialchars($detail['image']) ?>" class="img-fluid rounded shadow-sm berita-img" alt="">
+        </div>
+        <div class="col-md-7 col-lg-8">
+          <h1 class="display-5 fw-semibold mb-2 berita-title"><?= htmlspecialchars($detail['title']) ?></h1>
+          <div class="text-muted small mb-3"><?= htmlspecialchars($detail['date']) ?> • <?= htmlspecialchars($detail['author']) ?></div>
+          <div class="berita-content">
+            <p><?= nl2br(htmlspecialchars($detail['content'])) ?></p>
+          </div>
+        </div>
+      </div>
     </article>
     <a class="btn btn-outline-secondary" href="/hm/berita.php">Kembali</a>
   <?php else: ?>
@@ -36,6 +40,7 @@
   <div class="d-flex justify-content-between align-items-center mb-3">
     <h1 class="h4 mb-0">Berita</h1>
   </div>
+  <?php $berita = berita_all(); ?>
   <div class="row g-3">
     <?php foreach ($berita as $b): ?>
       <div class="col-md-4">

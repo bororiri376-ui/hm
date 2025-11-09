@@ -1,7 +1,25 @@
 body { background-color: #f8fafc; }
+
+/* Admin sidebar enhancements */
+.admin-sidebar { position: sticky; top: 1rem; }
+.admin-sidebar .list-group .list-group-item {
+  display: flex; align-items: center; gap: .5rem;
+  padding: .5rem .75rem;
+}
+.admin-sidebar .list-group .list-group-item.active {
+  font-weight: 600;
+}
 .navbar-brand { letter-spacing: 0.5px; }
-.card-img-top { object-fit: cover; height: 180px; }
-.gallery-img { object-fit: cover; height: 220px; }
+.card-img-top, .gallery-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  aspect-ratio: 4 / 3;
+}
+@media (min-width: 768px) {
+  .gallery-img { aspect-ratio: 16 / 9; }
+}
 footer { position: relative; }
 
 /* iOS liquid glass theme */
@@ -41,6 +59,28 @@ body {
 .navbar .navbar-brand { letter-spacing: .6px; color: #0f172a !important; }
 .navbar .nav-link { color: #0f172a !important; opacity: .8; }
 .navbar .nav-link:hover, .navbar .nav-link:focus { opacity: 1; }
+
+/* Brand logo image next to title */
+.brand-logo {
+  height: 32px;
+  width: 32px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-right: 8px;
+}
+@media (min-width: 768px) {
+  .brand-logo { height: 36px; width: 36px; }
+}
+
+.hero-logo {
+  height: 44px;
+  width: 44px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+@media (min-width: 50px) {
+  .hero-logo { height: 56px; width: 56px; }
+}
 
 /* Bubble hover effect for navbar */
 .navbar::before {
@@ -121,15 +161,15 @@ body {
   box-shadow: 0 6px 14px rgba(107,114,128,0.25);
 }
 .btn-primary {
-  background: linear-gradient(135deg, rgba(156, 163, 175, .96), rgba(209, 213, 219, .96)); /* gray-400 to gray-300 */
-  border-color: rgba(209, 213, 219, .9);
+  background: linear-gradient(135deg, #7ea6d6, #94a3b8); /* bluish gray */
+  border-color: #a5b4c3; /* blue-gray border */
 }
 .btn-primary:hover { filter: brightness(1.05); }
 .btn-outline-primary {
   background: var(--glass-bg);
   -webkit-backdrop-filter: saturate(160%) blur(10px);
   backdrop-filter: saturate(160%) blur(10px);
-  border-color: var(--glass-border);
+  border-color: #a5b4c3; /* bluish gray */
 }
 
 /* Bubble hover effect */
@@ -160,6 +200,30 @@ body {
 }
 .btn:active {
   transform: translateY(1px);
+}
+
+/* Admin-scoped bluish-white buttons */
+.admin-body .btn-primary {
+  background: linear-gradient(135deg, #e8f1ff, #f6fbff);
+  color: #0f172a;
+  border-color: #cfe3ff;
+}
+.admin-body .btn-primary:hover,
+.admin-body .btn-primary:focus {
+  background: linear-gradient(135deg, #e0ecff, #f0f7ff);
+  border-color: #bcd6ff;
+}
+.admin-body .btn-outline-primary {
+  color: #0f172a;
+  background: rgba(255,255,255,0.6);
+  -webkit-backdrop-filter: saturate(160%) blur(10px);
+  backdrop-filter: saturate(160%) blur(10px);
+  border-color: #cfe3ff;
+}
+.admin-body .btn-outline-primary:hover,
+.admin-body .btn-outline-primary:focus {
+  background: linear-gradient(135deg, #e8f1ff, #f6fbff);
+  border-color: #bcd6ff;
 }
 
 /* Convert generic primary backgrounds (panels/hero) into glass panes */
@@ -235,3 +299,31 @@ main .container { padding-left: .25rem; padding-right: .25rem; }
     background: rgba(255,255,255,0.9);
   }
 }
+
+.berita-detail .berita-img { display: block; width: 100%; height: auto; max-height: 420px; object-fit: cover; }
+@media (min-width: 768px) { .berita-detail .berita-img { max-height: 500px; } }
+.berita-detail .berita-title { line-height: 1.2; }
+.berita-detail .berita-content { font-size: 1rem; }
+
+/* Homepage enhancements */
+.hero-title { text-shadow: 0 2px 8px rgba(0,0,0,.35); }
+.hero-subtitle { opacity: .9; }
+
+.section-title {
+  position: relative;
+  padding-bottom: .25rem;
+}
+.section-title::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 72px;
+  height: 3px;
+  background: linear-gradient(90deg, #7ea6d6, #cbd5e1); /* bluish gray */
+  border-radius: 2px;
+}
+
+/* Subtle hover for cards on homepage */
+.card:hover { transform: translateY(-2px); transition: transform .18s ease, box-shadow .18s ease; }
+.card:hover { box-shadow: 0 12px 26px rgba(15, 23, 42, 0.12); }

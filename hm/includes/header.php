@@ -2,6 +2,12 @@
   $pageTitle = isset($pageTitle) ? $pageTitle . ' | HIMASI' : 'HIMASI';
   require_once __DIR__ . '/auth.php';
   $currentUser = auth_user();
+  $logoSrc = '';
+  if (file_exists(__DIR__ . '/../assets/img/logo.webp')) { $logoSrc = '/hm/assets/img/logo.webp'; }
+  elseif (file_exists(__DIR__ . '/../assets/img/HIMASI.png')) { $logoSrc = '/hm/assets/img/HIMASI.png'; }
+  elseif (file_exists(__DIR__ . '/../assets/img/logo.png')) { $logoSrc = '/hm/assets/img/logo.png'; }
+  elseif (file_exists(__DIR__ . '/../assets/img/HIMASI.jpg')) { $logoSrc = '/hm/assets/img/HIMASI.jpg'; }
+  elseif (file_exists(__DIR__ . '/../assets/img/logo.jpg')) { $logoSrc = '/hm/assets/img/logo.jpg'; }
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -16,7 +22,12 @@
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container">
-      <a class="navbar-brand fw-bold" href="/hm/">HIMASI</a>
+      <a class="navbar-brand fw-bold d-flex align-items-center" href="/hm/">
+        <?php if ($logoSrc): ?>
+          <img src="<?= htmlspecialchars($logoSrc) ?>" alt="Logo" class="brand-logo">
+        <?php endif; ?>
+        <span>HIMASI</span>
+      </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
         <span class="navbar-toggler-icon"></span>
       </button>

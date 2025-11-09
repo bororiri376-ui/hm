@@ -3,6 +3,10 @@
   require_once __DIR__ . '/auth.php';
   require_role(['student']);
   $currentUser = auth_user();
+  $logoSrc = '';
+  if (file_exists(__DIR__ . '/../assets/img/logo.webp')) { $logoSrc = '/hm/assets/img/logo.webp'; }
+  elseif (file_exists(__DIR__ . '/../assets/img/HIMASI.png')) { $logoSrc = '/hm/assets/img/HIMASI.png'; }
+  elseif (file_exists(__DIR__ . '/../assets/img/HIMASI.png')) { $logoSrc = '/hm/assets/img/HIMASI.png'; }
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -17,14 +21,20 @@
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark bg-info">
     <div class="container">
-      <a class="navbar-brand fw-bold" href="/hm/vote.php">Mahasiswa HIMASI</a>
+      <a class="navbar-brand fw-bold d-flex align-items-center" href="/hm/student/">
+        <?php if ($logoSrc): ?>
+          <img src="<?= htmlspecialchars($logoSrc) ?>" alt="Logo" class="brand-logo">
+        <?php endif; ?>
+        <span>Mahasiswa HIMASI</span>
+      </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="/hm/student/">Dashboard</a></li>
+          <li class="nav-item"><a class="nav-link" href="/hm/student/feedback.php">Kritik dan Saran</a></li>
           <li class="nav-item"><a class="nav-link" href="/hm/vote.php">Vote</a></li>
-          <li class="nav-item"><a class="nav-link" href="/hm/">Lihat Situs</a></li>
           <?php if ($currentUser): ?>
             <li class="nav-item"><a class="nav-link" href="/hm/logout.php">Logout (<?= htmlspecialchars($currentUser['name']) ?>)</a></li>
           <?php endif; ?>

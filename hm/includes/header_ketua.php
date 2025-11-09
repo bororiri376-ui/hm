@@ -3,6 +3,12 @@
   require_once __DIR__ . '/auth.php';
   require_role(['ketua']);
   $currentUser = auth_user();
+  $logoSrc = '';
+  if (file_exists(__DIR__ . '/../assets/img/logo.webp')) { $logoSrc = '/hm/assets/img/logo.webp'; }
+  elseif (file_exists(__DIR__ . '/../assets/img/HIMASI.png')) { $logoSrc = '/hm/assets/img/HIMASI.png'; }
+  elseif (file_exists(__DIR__ . '/../assets/img/logo.png')) { $logoSrc = '/hm/assets/img/logo.png'; }
+  elseif (file_exists(__DIR__ . '/../assets/img/HIMASI.jpg')) { $logoSrc = '/hm/assets/img/HIMASI.jpg'; }
+  elseif (file_exists(__DIR__ . '/../assets/img/logo.jpg')) { $logoSrc = '/hm/assets/img/logo.jpg'; }
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -17,14 +23,18 @@
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
     <div class="container">
-      <a class="navbar-brand fw-bold" href="/hm/ketua/report.php">Ketua HIMASI</a>
+      <a class="navbar-brand fw-bold d-flex align-items-center" href="/hm/ketua/">
+        <?php if ($logoSrc): ?>
+          <img src="<?= htmlspecialchars($logoSrc) ?>" alt="Logo" class="brand-logo">
+        <?php endif; ?>
+        <span>Ketua HIMASI</span>
+      </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
-          <li class="nav-item"><a class="nav-link" href="/hm/ketua/report.php">Laporan</a></li>
-          <li class="nav-item"><a class="nav-link" href="/hm/">Lihat Situs</a></li>
+          <li class="nav-item"><a class="nav-link" href="/hm/ketua/">Dashboard</a></li>
           <?php if ($currentUser): ?>
             <li class="nav-item"><a class="nav-link" href="/hm/logout.php">Logout (<?= htmlspecialchars($currentUser['name']) ?>)</a></li>
           <?php endif; ?>

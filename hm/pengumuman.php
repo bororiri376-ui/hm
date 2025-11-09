@@ -2,18 +2,14 @@
   $pageTitle = 'Pengumuman';
   require __DIR__ . '/includes/header.php';
 
-  function read_json($path) {
-    $json = @file_get_contents($path);
-    if ($json === false) return [];
-    $data = json_decode($json, true);
-    return is_array($data) ? $data : [];
-  }
-
-  $data = read_json(__DIR__ . '/data/pengumuman.json');
   $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 ?>
 
-<?php if ($id): $detail = null; foreach ($data as $p) { if ((int)$p['id'] === $id) { $detail = $p; break; } } ?>
+<?php if ($id):
+  $stmt = db()->prepare("SELECT id, title, DATE_FORMAT(date, '%Y-%m-%d') AS date, excerpt, content, link FROM pengumuman WHERE id=?");
+  $stmt->execute([$id]);
+  $detail = $stmt->fetch();
+?>
   <?php if ($detail): ?>
     <nav aria-label="breadcrumb" class="mb-3">
       <ol class="breadcrumb">
@@ -22,15 +18,32 @@
         <li class="breadcrumb-item active" aria-current="page">Detail</li>
       </ol>
     </nav>
-    <article class="mb-4">
-      <h1 class="h3"><?= htmlspecialchars($detail['title']) ?></h1>
-      <div class="text-muted small mb-3"><?= htmlspecialchars($detail['date']) ?></div>
-      <p><?= nl2br(htmlspecialchars($detail['content'])) ?></p>
-      <?php if (!empty($detail['link'])): ?>
-        <a href="<?= htmlspecialchars($detail['link']) ?>" target="_blank" class="btn btn-primary">Kunjungi tautan</a>
-      <?php endif; ?>
+
+    <div class="p-3 p-md-4 mb-3 rounded-4" style="background:linear-gradient(135deg, rgba(13,110,253,.08), rgba(102,16,242,.08));">
+      <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-2">
+        <div>
+          <h1 class="h4 mb-1">
+            <?= htmlspecialchars($detail['title']) ?>
+          </h1>
+          <span class="badge rounded-pill text-bg-light border text-muted">
+            📅 <?= htmlspecialchars($detail['date']) ?>
+          </span>
+        </div>
+        <?php if (!empty($detail['link'])): ?>
+          <a href="<?= htmlspecialchars($detail['link']) ?>" target="_blank" class="btn btn-primary">
+            Kunjungi tautan
+          </a>
+        <?php endif; ?>
+      </div>
+    </div>
+
+    <article class="card border-0 shadow-sm mb-4">
+      <div class="card-body">
+        <div class="lead" style="white-space:pre-wrap;"><?= nl2br(htmlspecialchars($detail['content'])) ?></div>
+      </div>
     </article>
-    <a class="btn btn-outline-secondary" href="/hm/pengumuman.php">Kembali</a>
+
+    <a class="btn btn-outline-primary" href="/hm/pengumuman.php">Kembali</a>
   <?php else: ?>
     <div class="alert alert-warning">Pengumuman tidak ditemukan.</div>
   <?php endif; ?>
@@ -38,6 +51,7 @@
   <div class="d-flex justify-content-between align-items-center mb-3">
     <h1 class="h4 mb-0">Pengumuman</h1>
   </div>
+  <?php $data = pengumuman_all(); ?>
   <div class="list-group">
     <?php foreach ($data as $p): ?>
       <a class="list-group-item list-group-item-action" href="/hm/pengumuman.php?id=<?= (int)$p['id'] ?>">
